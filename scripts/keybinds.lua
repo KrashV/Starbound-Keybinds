@@ -1,13 +1,12 @@
 --[[
-Keybinds Library (https://github.com/Silverfeelin/Starbound-Keybinds)
-Licensed under MIT (https://github.com/Silverfeelin/Starbound-Keybinds/blob/master/LICENSE)
-This file may be redistributed without including a copy of the license, as long as this header remains unmodified.
+Keybinds Library
+https://github.com/Silverfeelin/Starbound-Keybinds
 ]]
 
 keybinds = {
   binds = {},
   initialized = false,
-  version = "1.3.2"
+  version = "1.3.0"
 }
 
 -- For every type of input, set whether it can be bound.
@@ -19,7 +18,6 @@ keybinds.availableInputs = {
   right = true,
   primaryFire = true,
   altFire = true,
-  shift = true,
   onGround = true,
   running = true,
   walking = true,
@@ -35,6 +33,7 @@ keybinds.availableInputs = {
   specialOne = true,
   specialTwo = true,
   specialThree = true,
+  shift = true,
   time = true,
   -- Don't set this one to false, ever!
   aimOffset = true
@@ -48,7 +47,6 @@ keybinds.inputStrings = {
   right = "right",
   primaryfire = "primaryFire",
   altfire = "altFire",
-  shift = "shift",
   onground = "onGround",
   running = "running",
   walking = "walking",
@@ -64,6 +62,7 @@ keybinds.inputStrings = {
   specialone = "specialOne",
   specialtwo = "specialTwo",
   specialthree = "specialThree",
+  shift = "shift",
   time = "time",
   aimoffset = "aimOffset"
 }
@@ -71,12 +70,12 @@ keybinds.inputStrings = {
 -- Default values, do not touch.
 keybinds.input = {
   up = false, left = false, down = false, right = false,
-  primaryFire = false, altFire = false, shift = false,
+  primaryFire = false, altFire = false,
   onGround = true, running = false, walking = false, jumping = false,
   facingDirection = 1, liquidPercentage = 0,
   position = {0, 0}, aimPosition = {0, 0}, aimOffset = {2, 2}, aimRelative = {0, 0},
   f = false, g = false, h = false, specialOne = false, specialTwo = false, specialThree = false,
-  time = 0
+  shift = false, time = 0
 }
 
 -- Unique Bind identifier, used to track time without worrying about shifting indices.
@@ -140,8 +139,6 @@ function keybinds.updateInput(args)
   input.primaryFire = args.moves.primaryFire
   input.altFire = args.moves.altFire
 
-  input.shift = not args.moves.run
-
   input.onGround = mcontroller.onGround()
   input.running = mcontroller.running()
   input.walking = mcontroller.walking()
@@ -162,6 +159,7 @@ function keybinds.updateInput(args)
   input.g = args.moves.special2
   input.specialTwo = input.g
   input.h = args.moves.special3
+  input.shift = not args.moves.run
   input.specialThree = input.h
 end
 
@@ -217,6 +215,7 @@ function string:split(sep)
   self:gsub(pattern, function(c) fields[#fields+1] = c end)
   return fields
 end
+
 
 Bind = {}
 Bind.__index = Bind
